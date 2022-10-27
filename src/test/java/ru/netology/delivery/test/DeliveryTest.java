@@ -3,15 +3,18 @@ package ru.netology.delivery.test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.Keys;
 import ru.netology.delivery.data.DataGenerator;
 
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 
 class DeliveryTest {
 
     @BeforeEach
-    void setup() {
+    void preliminaryWork() {
         open("http://localhost:9999");
+        $x(".//span[@data-test-id='date']//child::input[@placeholder]")
+                .sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
     }
 
     @Test
