@@ -15,10 +15,10 @@ public class DataGenerator {
 
     @UtilityClass
     public static class Registration {
-        public static RegistrationInfo generateInfo(int days) {
+        public static DeliveryInfo generateInfo(int days) {
 
             Faker faker = new Faker(new Locale("ru"));
-            return new RegistrationInfo(
+            return new DeliveryInfo(
                     faker.address().cityName(),
                     LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy")),
                     faker.name().firstName() + " " + faker.name().lastName(),

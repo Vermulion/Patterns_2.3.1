@@ -1,12 +1,15 @@
 package ru.netology.delivery.test;
 
+import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 import ru.netology.delivery.data.DataGenerator;
+import ru.netology.delivery.data.DeliveryInfo;
 
 import static com.codeborne.selenide.Selenide.*;
+import static ru.netology.delivery.data.DataGenerator.Registration.generateInfo;
 
 class DeliveryTest {
 
@@ -18,17 +21,16 @@ class DeliveryTest {
     }
 
     @Test
-    @DisplayName("Should successful plan and replan meeting")
-    void shouldSuccessfulPlanAndReplanMeeting() {
-        var validUser = DataGenerator.Registration.generateUser("ru");
-        var daysToAddForFirstMeeting = 4;
-        var firstMeetingDate = DataGenerator.generateDate(daysToAddForFirstMeeting);
-        var daysToAddForSecondMeeting = 7;
-        var secondMeetingDate = DataGenerator.generateDate(daysToAddForSecondMeeting);
-        // TODO: добавить логику теста в рамках которого будет выполнено планирование и перепланирование встречи.
-        // Для заполнения полей формы можно использовать пользователя validUser и строки с датами в переменных
-        // firstMeetingDate и secondMeetingDate. Можно также вызывать методы generateCity(locale),
-        // generateName(locale), generatePhone(locale) для генерации и получения в тесте соответственно города,
-        // имени и номера телефона без создания пользователя в методе generateUser(String locale) в датагенераторе
+    @DisplayName("Should successfully plan meeting and change its date")
+    void shouldSuccessfullyPlanMeetingAndChangeDate() {
+        DeliveryInfo firstDate = generateInfo(3);
+        DeliveryInfo secondDate = generateInfo(15);
+        Configuration.holdBrowserOpen = true;
+        $x(".//span[@data-test-id='city']//child::input[@placeholder]").val(firstDate.getCity());
+        $x(".//span[@data-test-id='date']//child::input[@placeholder]").val(firstDate.getDate());
+        $x(".//span[@data-test-id='name']//child::input").val(firstDate.getName());
+        $x(".//span[@data-test-id='phone']//child::input").val(firstDate.getPhoneNumber());
+        $x(".//label[@data-test-id='agreement']").click();
+
     }
 }
